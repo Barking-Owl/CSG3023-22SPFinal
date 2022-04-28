@@ -2,10 +2,12 @@
  * Created by: Bob Baloney
  * Date Created: April 20, 2022
  * 
- * Last Edited by: 
- * Last Edited:
+ * Last Edited by: Andrew Nguyen
+ * Last Edited: April 28, 2022
  * 
- * Description: Spawns bircks
+ * Description: Spawns bircks. For the most part already done, but there were errors to do with a missing declaration of brickGO.
+ * There was also no reference in brickPrefab which has been fixed.
+ * There was an error to instantiate.
 ****/
 
 /*** Using Namespaces ***/
@@ -16,8 +18,9 @@ using UnityEngine;
 public class BrickSpawner : MonoBehaviour
 {
    
-    public GameObject brickPrefab; 
-    public float paddingBetweenBricks = 0.25f; 
+    public GameObject brickPrefab; //Reference to brick prefab
+    public GameObject brickGO; //Individual bricks that'll be generated
+    public float paddingBetweenBricks = 0.25f; //space between bricks
     private Vector2 brickPadding = new Vector2(0,0);  
 
 
@@ -36,10 +39,10 @@ public class BrickSpawner : MonoBehaviour
             {
                 Vector3 pos = new Vector3(x * brickPadding.x , y * brickPadding.y, 0); 
               
-                brickGo = Instantiate.brickPrefab; 
+                brickGO = Instantiate(brickPrefab); 
               
-                brickGo.transform.parent = transform; 
-                brickGo.transform.localPosition = pos; 
+                brickGO.transform.parent = transform; 
+                brickGO.transform.localPosition = pos; 
 
             }//end for(int x=0; x < 9; x++)
         }//end for (int y=0; y < 9; y++)
