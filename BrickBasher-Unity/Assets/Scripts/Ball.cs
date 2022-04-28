@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Ball : MonoBehaviour
@@ -24,6 +25,7 @@ public class Ball : MonoBehaviour
     [Tooltip("Set dynamically")]
     public int score;
     public Text scoreTxt;
+    public Text brickTxt;
 
     [Header("Ball Settings")]
     public AudioSource audioSource;
@@ -82,6 +84,15 @@ public class Ball : MonoBehaviour
             isInPlay = true;
             Move();
         } //end if
+
+        if (brickTxt)
+        {
+            brickTxt.text = "Bricks Left: " + BrickSpawner.brickCount;
+        }
+        if (BrickSpawner.brickCount <= 0)
+        {
+            GameOver();
+        }
     }//end Update()
 
 
@@ -123,8 +134,14 @@ public class Ball : MonoBehaviour
         {
             score += 100;
             Destroy(col.gameObject);
+            BrickSpawner.brickCount--;
         } //end if
     } //end OnCollisionEnter
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("SampleScene");
+    } //end GameOver()
 
     //For the ball hitting bounds
     public void OnTriggerEnter(Collider other)
@@ -132,10 +149,12 @@ public class Ball : MonoBehaviour
         if (other.gameObject.tag == "OutBounds")
         {
             numberOfBalls--;
+            Invoke("SetStartingPos", 2f);
         } 
         if (numberOfBalls < 0)
         {
-            Invoke("SetStartingPos", 2f);
+            //Should be a gameover sign. We can also reload the scene
+            GameOver();
         }
     } //end OnTriggerEnter
 

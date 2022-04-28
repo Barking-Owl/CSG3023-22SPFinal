@@ -21,8 +21,9 @@ public class BrickSpawner : MonoBehaviour
     public GameObject brickPrefab; //Reference to brick prefab
     public GameObject brickGO; //Individual bricks that'll be generated
     public float paddingBetweenBricks = 0.25f; //space between bricks
-    private Vector2 brickPadding = new Vector2(0,0);  
+    private Vector2 brickPadding = new Vector2(0,0);
 
+    static public int brickCount;
 
     // Start is called before the first frame update
     void Start()
@@ -42,8 +43,8 @@ public class BrickSpawner : MonoBehaviour
                 brickGO = Instantiate(brickPrefab); 
               
                 brickGO.transform.parent = transform; 
-                brickGO.transform.localPosition = pos; 
-
+                brickGO.transform.localPosition = pos;
+                brickCount++;
             }//end for(int x=0; x < 9; x++)
         }//end for (int y=0; y < 9; y++)
     }
